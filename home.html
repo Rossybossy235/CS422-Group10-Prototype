@@ -32,8 +32,10 @@
     <h1 id="logo">PhysSchedule</h1>
     <h2 id="home">Home</h2>
     <div id="datediv">
+        <input type="button" value="<" id="calendar1">
         <h2 id="date"></h2>
-        <button id="calendar" class="button"><i class="fa fa-calendar" aria-hidden="true"></i></button>
+        <input type="button" value=">" id="calendar2">
+        <!-- <button id="calendar" class="button"><i class="fa fa-calendar" aria-hidden="true"></i></button> -->
     </div>
     <div id="upcomingdiv">
         <h2 id="upcoming">Upcoming Therapies</h2>
@@ -67,13 +69,38 @@
 </body>
 
 <script>
+    var date = new Date();
     var today = new Date();
-    var dd = String(today.getDate()).padStart(2, '0');
-    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-    var yyyy = today.getFullYear();
+    var dd = String(date.getDate()).padStart(2, '0');
+    var mm = String(date.getMonth() + 1).padStart(2, '0');
+    var yyyy = date.getFullYear();
 
-    today = mm + '/' + dd + '/' + yyyy;
-    $("#date")[0].textContent = "Today, " + today;
+    Stringdate = mm + '/' + dd + '/' + yyyy;
+    $("#date")[0].textContent = "Today, " + Stringdate;
+
+    $(document).on("click", "#calendar1", function(evt) {
+        date.setDate(date.getDate() - 1);
+        dd = String(date.getDate()).padStart(2, '0');
+        mm = String(date.getMonth() + 1).padStart(2, '0');
+        yyyy = date.getFullYear();
+        Stringdate = mm + '/' + dd + '/' + yyyy;
+        if(date.getDate() == today.getDate())
+            $("#date")[0].textContent = "Today, " + Stringdate;
+        else
+            $("#date")[0].textContent = Stringdate;
+    });
+
+    $(document).on("click", "#calendar2", function(evt) {
+        date.setDate(date.getDate() + 1);
+        dd = String(date.getDate()).padStart(2, '0');
+        mm = String(date.getMonth() + 1).padStart(2, '0');
+        yyyy = date.getFullYear();
+        Stringdate = mm + '/' + dd + '/' + yyyy;
+        if(date.getDate() == today.getDate())
+            $("#date")[0].textContent = "Today, " + Stringdate;
+        else
+            $("#date")[0].textContent = Stringdate;
+    });
 
     $(document).on("click", "#therapydiv1", function(evt) {
         window.location.href = "index.html"
