@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="utf-8">
+<title>PhysSchedule</title>
+
+<!-- Load style sheets -->
+<link rel="stylesheet" href=
+  "https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.css">
+<link rel="stylesheet" href=
+  "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<link rel="stylesheet" href="homePage.css">
+
+<!-- Use mobile-aware viewport -->
+<meta name="viewport" content=
+  "width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!-- Load any supplemental Javascript libraries here -->
+<script src=
+  "https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src=
+  "https://cdnjs.cloudflare.com/ajax/libs/seedrandom/2.4.2/seedrandom.js">
+</script>
+
+</head>
+
+<body>
+
+  <div>
+    <h1 id="logo">PhysSchedule</h1>
+    <h2 id="home">Home</h2>
+    <div id="datediv">
+        <h2 id="date"></h2>
+        <button id="calendar" class="button"><i class="fa fa-calendar" aria-hidden="true"></i></button>
+    </div>
+    <div id="upcomingdiv">
+        <h2 id="upcoming">Upcoming Therapies</h2>
+    </div>
+    <div id="therapydiv1">
+        <div id="therapytitlediv">
+            <h1 id="therapytitle">Knee Therapy</h1>
+            <h1 id="timeline">Begins 1 Hour</h1>
+        </div>
+        <p id="description">General knee therapy for all types of knee 
+            surgery types that lasts 15 minutes and must be performed daily</p>
+    </div>
+    <div id="therapydiv2">
+        <div id="therapytitlediv">
+            <h1 id="therapytitle">Shoulder Therapy</h1>
+            <h1 id="timeline">Begins 1 Hour</h1>
+        </div>
+        <p id="description">Rehabilitative shoulder therapy for recovery
+            from dislocation. This last 10 minutes and must be performed twice a week</p>
+    </div>
+    <div id="therapydiv3">
+        <div id="therapytitlediv">
+            <h1 id="therapytitle">Knee Therapy</h1>
+            <h1 id="timeline">Begins 1 Hour</h1>
+        </div>
+        <p id="description">General knee therapy for all types of knee 
+            surgery types that lasts 15 minutes and must be performed daily</p>
+    </div>
+  </div>
+
+</body>
+
+<script>
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var yyyy = today.getFullYear();
+
+    today = mm + '/' + dd + '/' + yyyy;
+    $("#date")[0].textContent = "Today, " + today;
+
+    $(document).on("click", "#therapydiv1", function(evt) {
+        window.location.href = "index.html"
+    });
+    $(document).on("click", "#therapydiv2", function(evt) {
+        window.location.href = "index.html"
+    });
+    $(document).on("click", "#therapydiv3", function(evt) {
+        window.location.href = "index.html"
+    });
+
+    $(document).on("mouseover", "#therapydiv1", function(evt) {
+        $("#therapydiv1").css("background-color", "lightgray");
+    });
+    $(document).on("mouseout", "#therapydiv1", function(evt) {
+        $("#therapydiv1").css("background-color", "white");
+    });
+    $(document).on("mouseover", "#therapydiv2", function(evt) {
+        $("#therapydiv2").css("background-color", "lightgray");
+    });
+    $(document).on("mouseout", "#therapydiv2", function(evt) {
+        $("#therapydiv2").css("background-color", "white");
+    });
+    $(document).on("mouseover", "#therapydiv3", function(evt) {
+        $("#therapydiv3").css("background-color", "lightgray");
+    });
+    $(document).on("mouseout", "#therapydiv3", function(evt) {
+        $("#therapydiv3").css("background-color", "white");
+    });
+</script>
+
+</html>
