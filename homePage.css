@@ -22,16 +22,27 @@
 
 #date {
     margin-bottom: 0px;
+    margin-left: 20px;
     margin-right: 20px;
     width: fit-content;
     font-size: 30px;
 }
 
-#calendar {
-    width: 66px;
+#calendar1 {
+    width: 62px;
     height: fit-content;
     font-size: 40px;
     border: none;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+#calendar2 {
+    width: 62px;
+    height: fit-content;
+    font-size: 40px;
+    border: none;
+    border-radius: 50%;
     cursor: pointer;
 }
 
