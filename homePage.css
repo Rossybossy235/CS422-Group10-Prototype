@@ -2,6 +2,7 @@
     width: fit-content;
     font-size: 60px;
     margin: 0 auto;
+    margin-bottom: 1rem;
 }
 
 #home {
@@ -117,4 +118,8 @@
     margin-right: 10px;
     margin-bottom: 5px;
     font-size: 15px;
+}
+
+.modal-backdrop {
+    top: 58px;
 }

@@ -32,12 +32,12 @@
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <a class="navbar-brand" href="#">PhysSchedule</a>
+            <a class="navbar-brand" href="#" onClick="closeCanvas()">PhysSchedule</a>
             <div class="d-none d-md-flex flex-row">
-                <div class="p-2" href="#">Home</div>
-                <div class="p-2" href="#">Add Therapy</div>
+                <a class="btn p-2" href="#" onClick="closeCanvas()">Home</a>
+                <a class="btn p-2" href="#">Add Therapy</a>
             </div>
-            <div class="d-none d-md-flex flex-row" style="margin-left: auto">
+            <div class="d-none d-md-flex flex-row" style="margin-left: auto;cursor: pointer;" onClick="openProfile()">
                 <img src="assets/default-pfp.png" style="max-height: 35px; margin-top: 0.2rem;" alt="Profile Image">
                 <div class="p-2" href="#">Profile</div>
             </div>
@@ -45,7 +45,7 @@
             <div class="d-md-none navbar-collapse collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item mt-2" style="border-top: 1px solid rgba(0,0,0,0.1)">
-                        <a class="nav-link" href="#">Home</a>
+                        <a class="nav-link" href="#" onClick="closeCanvas()">Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Add Therapy</a>
@@ -60,39 +60,14 @@
     </div>
 
     <div style="padding-top: 5rem">
-        <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling"
-            aria-controls="offcanvasScrolling">Toggle right
-            offcanvas</button>
-
-        <div class="offcanvas offcanvas-end" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1"
-            id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel" style="margin-top: 57px;width: 25rem;">
-            <div class="offcanvas-header">
-                <button type="button" class="btn" id="openBtn" onClick="expand2()">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
-                        class="bi bi-chevron-left" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd"
-                            d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z" />
-                    </svg>
-                </button>
-                <button type="button" class="btn" id="closeBtn" style="display: none" onClick="expand2()">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
-                        class="bi bi-chevron-right" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd"
-                            d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
-                    </svg>
-                </button>
-                <h5 class="offcanvas-title" id="offcanvasScrollingLabel">Colored with scrolling</h5>
-                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
-                    aria-label="Close"></button>
-            </div>
-            <div class="offcanvas-body">
-                <p>Try scrolling the rest of the page to see this option in action.</p>
-            </div>
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasScrolling"
+            aria-labelledby="offcanvasScrollingLabel" style="margin-top: 58px;width: 25rem;">
         </div>
 
         <h1 id="logo">All Therapies</h1>
-        <div class="container">
-            <input id="datetimepicker" class="form-control" type="text">
+        <div class="d-flex flex-row mx-auto" style="width: fit-content">
+            <input id="datetimepicker" class="form-control" type="text" style="max-width: 10rem;margin-right:0.5rem;">
+            <button class="btn btn-primary" onClick="setDate()">Go to date</button>
         </div>
         <div id="datediv">
             <input type="button" value="<" id="calendar1">
@@ -112,6 +87,7 @@
     therapies.push(new Therapy("Knee Therapy", "15 minutes", "Daily", "General Knee Therapy for all knee surgery types that lasts 15 minutes and must be performed daily.", "9:15am", new Date(2022, 9, 10, 9, 15, 0), new Date(2023, 2, 10, 9, 15, 0)));
     therapies.push(new Therapy("Shoulder Therapy", "30 minutes", "Biweekly", "Rehabilitative Shoulder Therapy for recovery from dislocation. This lasts 10 minutes and must be performed twice a week.", "12:00pm", new Date(2022, 9, 10, 9, 15, 0), new Date(2023, 2, 10, 9, 15, 0)));
     therapies.push(new Therapy("Back Exercise", "1 hour", "Weekly", "Occupational injury exercise to recover from back injuries from work/job.", "10:00pm", new Date(2022, 9, 10, 9, 15, 0), new Date(2023, 2, 10, 9, 15, 0)));
+    var display = [];
 
     var date = new Date();
     var today = new Date();
@@ -119,7 +95,7 @@
     var expanded2 = false;
 
     function filterTherapies(date) {
-        var display = [];
+        display = [];
         therapies.forEach(t => {
             var start = new Date(t.startDate.getTime());
             var end = t.endDate;
@@ -153,14 +129,14 @@
                 }
             }
         });
-        return display;
     }
 
-    function renderTherapies(display) {
+    function renderTherapies() {
         $('#list').empty();
-        display.forEach(t => {
+        display.forEach((t, i) => {
             $("#list").append(`
-                <div id="therapydiv1">
+                <div id="therapydiv1" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling"
+            aria-controls="offcanvasScrolling" onClick="openTherapy(${i})">
                     <div id="therapytitlediv">
                         <h1 id="therapytitle">${t.title}</h1>
                         <h1 id="timeline">Starts at ${t.startTime}</h1>
@@ -171,8 +147,118 @@
         });
     }
 
+    function closeCanvas() {
+        $("#offcanvasScrolling").offcanvas('hide');
+    }
+
+    function openTherapy(i) {
+        var t = display[i];
+        $("#offcanvasScrolling").css('width', expanded2 ? '100%' : '25rem');
+        $("#offcanvasScrolling").empty();
+        $("#offcanvasScrolling").append(`
+            <div class="offcanvas-header">
+                <button type="button" class="btn" id="openBtn" onClick="expand2()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                        class="bi bi-chevron-left" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd"
+                            d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z" />
+                    </svg>
+                </button>
+                <button type="button" class="btn" id="closeBtn" style="display: none" onClick="expand2()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                        class="bi bi-chevron-right" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd"
+                            d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
+                    </svg>
+                </button>
+                <h5 class="offcanvas-title" id="offcanvasScrollingLabel">${t.title}</h5>
+                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                    aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                <div class="mx-auto" style="width:fit-content">
+                    <div class="row"
+                        style="border: 1px solid rgba(0,0,0,0.1);border-radius: 10px;max-width:40rem;margin-bottom:1rem;">
+                        <img src="assets/VideoSkeleton.png" alt="videoImg" id="img">
+                    </div>
+
+                    <div class="row">
+                        <div id="duration">Recommended Duration: ${t.duration}</div>
+                    </div>
+
+                    <div class="row">
+                        <div id="frequency">Frequency: ${t.frequency}</div>
+                    </div>
+
+                    <div class="row" id="directionsRow">
+                        <div id="directions">Directions:</div>
+                    </div>
+                </div>
+            </div>
+        `)
+    }
+
+    function openProfile() {
+        $("#offcanvasScrolling").css('width', '100%');
+        $("#offcanvasScrolling").offcanvas('show');
+
+        $("#offcanvasScrolling").empty();
+        $("#offcanvasScrolling").append(`
+            <div class="offcanvas-header">
+                <span />
+                <h5 class="offcanvas-title" id="offcanvasScrollingLabel">Profile</h5>
+                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                    aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body" style="text-align:center;">
+                <div class="mx-auto" style="width:fit-content">
+                    <div class="mx-auto" style="width:fit-content;">
+                        <img src="assets/default-pfp.png" alt="default profile picture" style="max-width:10rem;">
+                    </div>
+                    <div>
+                        <h2>William McHandson</h2>
+                    </div>
+                    <hr>
+                    <div>
+                        <h2 id="notifications">Notifications</h2>
+                        <p class="p-2" style="margin-bottom:0.5rem;">Notification Type</p>
+                        
+                        <div class="btn-group" role="group" aria-label="Basic example" style="margin-bottom:0.5rem;">
+                            <button id="phoneNotif" type="button" class="btn btn-primary active" onClick="toggle(this)">Phone</button>
+                            <button id="appNotif" type="button" class="btn btn-primary" onClick="toggle(this)">App</button>
+                            <button id="disableNotif" type="button" class="btn btn-primary" onClick="toggle(this)">Disabled</button>
+                        </div>
+                        <br>
+                        <button type="button" class="btn btn-primary" style="margin-bottom:1rem;">All Therapy Notifications</button>
+
+                        <h2 id="settings">Settings</h2>
+                        <p class="p-2" style="margin-bottom:0.5rem;">Text Size</p>
+                        <div class="d-flex flex-row">
+                            <p class="px-2" style="margin-top:0.4rem;">aA</p>
+                            <input type="range" class="form-range" id="customRange1" style="margin-top:0.5rem;">
+                            <p class="px-2" style="font-size:25px;">aA</p>
+                        </div>
+                        <span style="margin-top: 8rem;display: block;" />
+                        <button class="btn btn-light">Logout</button>
+                        <span style="margin-top: 4rem;display: block;" />
+                    </div>
+                </div>
+            </div>
+        `)
+    }
+
     function isHappening(startDate, endDate, calendarDay) {
         return calendarDay >= startDate && calendarDay <= endDate;
+    }
+
+    function toggle(ele) {
+        var btns = ['phoneNotif', 'appNotif', 'disableNotif'];
+        btns.forEach(b => {
+            if (ele.id === b)
+                $(`#${ele.id}`).addClass('active');
+            else
+                $(`#${b}`).removeClass('active');
+        });
     }
 
     function expand() {
@@ -182,19 +268,28 @@
 
     function expand2() {
         if (expanded2) {
-            $("#closeBtn").css('display','none');
-            $("#openBtn").css('display','inline');
+            $("#closeBtn").css('display', 'none');
+            $("#openBtn").css('display', 'inline');
             $("#offcanvasScrolling").css('width', '25rem');
         } else {
-            $("#openBtn").css('display','none');
-            $("#closeBtn").css('display','inline');
+            $("#openBtn").css('display', 'none');
+            $("#closeBtn").css('display', 'inline');
             $("#offcanvasScrolling").css('width', '100%');
         }
         expanded2 = !expanded2;
     }
 
-    $("#date").css('color', 'green');
-    $("#date")[0].textContent = date.toDateString();
+    function setDate() {
+        date = new Date($("#datetimepicker")[0].value);
+
+        $("#date").css('color', '#292b2c');
+        if (date.toDateString() === today.toDateString())
+            $("#date").css('color', 'green');
+        $("#date")[0].textContent = date.toDateString();
+
+        filterTherapies(date);
+        renderTherapies();
+    }
 
     $(document).on("click", "#calendar1", function (evt) {
         date.setDate(date.getDate() - 1);
@@ -204,7 +299,8 @@
             $("#date").css('color', 'green');
         $("#date")[0].textContent = date.toDateString();
 
-        renderTherapies(filterTherapies(date));
+        filterTherapies(date);
+        renderTherapies();
     });
 
     $(document).on("click", "#calendar2", function (evt) {
@@ -215,10 +311,14 @@
             $("#date").css('color', 'green');
         $("#date")[0].textContent = date.toDateString();
 
-        renderTherapies(filterTherapies(date));
+        filterTherapies(date);
+        renderTherapies();
     });
 
-    renderTherapies(filterTherapies(date));
+    $("#date").css('color', 'green');
+    $("#date")[0].textContent = date.toDateString();
+    filterTherapies(date);
+    renderTherapies();
 
 </script>
 
