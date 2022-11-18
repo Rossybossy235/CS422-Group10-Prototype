@@ -35,7 +35,7 @@
             <a class="navbar-brand" href="#" onClick="closeCanvas()">PhysSchedule</a>
             <div class="d-none d-md-flex flex-row">
                 <a class="btn p-2" href="#" onClick="closeCanvas()">Home</a>
-                <a class="btn p-2" href="#">Add Therapy</a>
+                <a class="btn p-2" href="#" onClick="openForm()">Add Therapy</a>
             </div>
             <div class="d-none d-md-flex flex-row" style="margin-left: auto;cursor: pointer;" onClick="openProfile()">
                 <img src="assets/default-pfp.png" style="max-height: 35px; margin-top: 0.2rem;" alt="Profile Image">
@@ -48,10 +48,10 @@
                         <a class="nav-link" href="#" onClick="closeCanvas()">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Add Therapy</a>
+                        <a class="nav-link" href="#" onClick="openForm()">Add Therapy</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Profile</a>
+                        <a class="nav-link" href="#" onClick="openProfile()">Profile</a>
                     </li>
                 </ul>
             </div>
@@ -82,6 +82,10 @@
 
 <script>
     $('#datetimepicker').datetimepicker();
+    var codes = [];
+    codes.push(new Therapy("Knee Therapy", "15 minutes", "Daily", "General Knee Therapy for all knee surgery types that lasts 15 minutes and must be performed daily.", "9:15am", new Date(2022, 9, 10, 9, 15, 0), new Date(2023, 2, 10, 9, 15, 0)));
+    codes.push(new Therapy("Shoulder Therapy", "30 minutes", "Biweekly", "Rehabilitative Shoulder Therapy for recovery from dislocation. This lasts 10 minutes and must be performed twice a week.", "12:00pm", new Date(2022, 9, 10, 9, 15, 0), new Date(2023, 2, 10, 9, 15, 0)));
+    codes.push(new Therapy("Back Exercise", "1 hour", "Weekly", "Occupational injury exercise to recover from back injuries from work/job.", "10:00pm", new Date(2022, 9, 10, 9, 15, 0), new Date(2023, 2, 10, 9, 15, 0)));
 
     var therapies = [];
     therapies.push(new Therapy("Knee Therapy", "15 minutes", "Daily", "General Knee Therapy for all knee surgery types that lasts 15 minutes and must be performed daily.", "9:15am", new Date(2022, 9, 10, 9, 15, 0), new Date(2023, 2, 10, 9, 15, 0)));
@@ -193,9 +197,48 @@
                     <div class="row" id="directionsRow">
                         <div id="directions">Directions:</div>
                     </div>
+
+                    <div id="carouselExampleIndicators" class="carousel slide mx-auto" data-bs-ride="carousel" style="max-width:30rem;">
+                        <div class="carousel-indicators">
+                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                        </div>
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img src="assets/default-pfp.png" class="d-block w-100" alt="...">
+                                <div class="carousel-caption d-none d-md-block">
+                                    <h5>Step 1</h5>
+                                    <p>Some representative placeholder content for the first slide.</p>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <img src="assets/default-pfp.png" class="d-block w-100" alt="...">
+                                <div class="carousel-caption d-none d-md-block">
+                                    <h5>Step 2</h5>
+                                    <p>Some representative placeholder content for the first slide.</p>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <img src="assets/default-pfp.png" class="d-block w-100" alt="...">
+                                <div class="carousel-caption d-none d-md-block">
+                                    <h5>Step 3</h5>
+                                    <p>Some representative placeholder content for the first slide.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
                 </div>
             </div>
-        `)
+        `);
     }
 
     function openProfile() {
@@ -244,7 +287,95 @@
                     </div>
                 </div>
             </div>
-        `)
+        `);
+    }
+
+    function openForm() {
+        $("#offcanvasScrolling").css('width', '100%');
+        $("#offcanvasScrolling").offcanvas('show');
+
+        $("#offcanvasScrolling").empty();
+        $("#offcanvasScrolling").append(`
+            <div class="offcanvas-header">
+                <span />
+                <h5 class="offcanvas-title" id="offcanvasScrollingLabel">Add Therapy</h5>
+                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                    aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body" style="text-align:center;">
+                <div class="mx-auto" style="width:fit-content">
+                    <h2>Enter Therapy Code from Doctor:</h2>
+                    <input id="idCode" class="form-control" type="text" style="margin-bottom:0.5rem;">
+                    <button class="btn btn-primary" onClick="addTherapy()">Add Therapy</button>
+                </div>
+            </div>
+        `);
+    }
+
+    function addTherapy() {
+        var idx = parseInt($("#idCode")[0].value);
+        if ((!idx && idx !== 0) || idx < 0 || idx > 2)
+            return;
+        $("#offcanvasScrolling").empty();
+        $("#offcanvasScrolling").append(`
+            <div class="offcanvas-header">
+                <span />
+                <h5 class="offcanvas-title" id="offcanvasScrollingLabel">Add Therapy</h5>
+                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                    aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body" style="text-align:center;">
+                <div class="mx-auto" style="width:fit-content">
+                    <h2>Confirm Therapy Details</h2>
+                    <div class="row">
+                        <div id="frequency">Hospital: Northwestern Hospital</div>
+                    </div>
+                    <div class="row">
+                        <div id="frequency">Doctor: Dr. Jon Dowe</div>
+                    </div>
+                    
+                    <div class="row">
+                        <div id="name">Therapy Name: ${codes[idx].title}</div>
+                    </div>
+
+                    <div class="row">
+                        <div id="duration">Recommended Duration: ${codes[idx].duration}</div>
+                    </div>
+
+                    <div class="row" style="margin-bottom:1rem;">
+                        <div id="frequency">Frequency: ${codes[idx].frequency}</div>
+                    </div>
+
+                    <div class="d-flex flex-row">
+                        <button class="btn btn-danger" style="margin-right: auto;" onClick="openForm()">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16">
+                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                            </svg>
+                        </button>
+                        <button class="btn btn-success" onClick="pushTherapy(${idx})">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor" class="bi bi-check-circle" viewBox="0 0 16 16">
+                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `);
+    }
+
+    function pushTherapy(id) {
+        $("#offcanvasScrolling").offcanvas('hide');
+        therapies.push(codes[id]);
+
+        $("#date").css('color', '#292b2c');
+        if (date.toDateString() === today.toDateString())
+            $("#date").css('color', 'green');
+        $("#date")[0].textContent = date.toDateString();
+
+        filterTherapies(date);
+        renderTherapies();
     }
 
     function isHappening(startDate, endDate, calendarDay) {
