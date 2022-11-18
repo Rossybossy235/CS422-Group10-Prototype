@@ -1,1 +1,225 @@
+<!DOCTYPE html>
+<html>
 
+<head>
+    <meta charset="utf-8">
+    <title>PhysSchedule</title>
+
+    <!-- Load style sheets -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
+
+    <link rel="stylesheet" href="homePage.css">
+
+    <!-- Use mobile-aware viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Load any supplemental Javascript libraries here -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="therapy.js"></script>
+
+</head>
+
+<body>
+    <div>
+        <nav class="navbar navbar-light bg-light px-3">
+            <button class="d-md-none navbar-toggler" style="margin-right: 1rem" type="button" onClick="expand()"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <a class="navbar-brand" href="#">PhysSchedule</a>
+            <div class="d-none d-md-flex flex-row">
+                <div class="p-2" href="#">Home</div>
+                <div class="p-2" href="#">Add Therapy</div>
+            </div>
+            <div class="d-none d-md-flex flex-row" style="margin-left: auto">
+                <img src="assets/default-pfp.png" style="max-height: 35px; margin-top: 0.2rem;" alt="Profile Image">
+                <div class="p-2" href="#">Profile</div>
+            </div>
+
+            <div class="d-md-none navbar-collapse collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item mt-2" style="border-top: 1px solid rgba(0,0,0,0.1)">
+                        <a class="nav-link" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Add Therapy</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Profile</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <hr class="mt-0 mb-0">
+    </div>
+
+    <div style="padding-top: 5rem">
+        <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling"
+            aria-controls="offcanvasScrolling">Toggle right
+            offcanvas</button>
+
+        <div class="offcanvas offcanvas-end" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1"
+            id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel" style="margin-top: 57px;width: 25rem;">
+            <div class="offcanvas-header">
+                <button type="button" class="btn" id="openBtn" onClick="expand2()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                        class="bi bi-chevron-left" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd"
+                            d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z" />
+                    </svg>
+                </button>
+                <button type="button" class="btn" id="closeBtn" style="display: none" onClick="expand2()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                        class="bi bi-chevron-right" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd"
+                            d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
+                    </svg>
+                </button>
+                <h5 class="offcanvas-title" id="offcanvasScrollingLabel">Colored with scrolling</h5>
+                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                    aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                <p>Try scrolling the rest of the page to see this option in action.</p>
+            </div>
+        </div>
+
+        <h1 id="logo">All Therapies</h1>
+        <div class="container">
+            <input id="datetimepicker" class="form-control" type="text">
+        </div>
+        <div id="datediv">
+            <input type="button" value="<" id="calendar1">
+            <h2 id="date"></h2>
+            <input type="button" value=">" id="calendar2">
+        </div>
+
+        <div id="list"></div>
+    </div>
+
+</body>
+
+<script>
+    $('#datetimepicker').datetimepicker();
+
+    var therapies = [];
+    therapies.push(new Therapy("Knee Therapy", "15 minutes", "Daily", "General Knee Therapy for all knee surgery types that lasts 15 minutes and must be performed daily.", "9:15am", new Date(2022, 9, 10, 9, 15, 0), new Date(2023, 2, 10, 9, 15, 0)));
+    therapies.push(new Therapy("Shoulder Therapy", "30 minutes", "Biweekly", "Rehabilitative Shoulder Therapy for recovery from dislocation. This lasts 10 minutes and must be performed twice a week.", "12:00pm", new Date(2022, 9, 10, 9, 15, 0), new Date(2023, 2, 10, 9, 15, 0)));
+    therapies.push(new Therapy("Back Exercise", "1 hour", "Weekly", "Occupational injury exercise to recover from back injuries from work/job.", "10:00pm", new Date(2022, 9, 10, 9, 15, 0), new Date(2023, 2, 10, 9, 15, 0)));
+
+    var date = new Date();
+    var today = new Date();
+    var expanded = false;
+    var expanded2 = false;
+
+    function filterTherapies(date) {
+        var display = [];
+        therapies.forEach(t => {
+            var start = new Date(t.startDate.getTime());
+            var end = t.endDate;
+            if (t.frequency === 'Daily') {
+                if (isHappening(t.startDate, t.endDate, date))
+                    display.push(t);
+            } else if (t.frequency === 'Weekly') {
+                while (start <= end) {
+                    if (start.toDateString() === date.toDateString()) {
+                        display.push(t);
+                        break;
+                    }
+                    start.setDate(start.getDate() + 7);
+                }
+            } else if (t.frequency === 'Biweekly') {
+                var cnt = 0;
+                while (start <= end) {
+                    if (start.toDateString() === date.toDateString()) {
+                        display.push(t);
+                        break;
+                    }
+                    start.setDate(start.getDate() + (cnt % 2 ? 3 : 4));
+                }
+            } else if (t.frequency === 'Monthly') {
+                while (start <= end) {
+                    if (start.toDateString() === date.toDateString()) {
+                        display.push(t);
+                        break;
+                    }
+                    start.setDate(start.getDate() + 30);
+                }
+            }
+        });
+        return display;
+    }
+
+    function renderTherapies(display) {
+        $('#list').empty();
+        display.forEach(t => {
+            $("#list").append(`
+                <div id="therapydiv1">
+                    <div id="therapytitlediv">
+                        <h1 id="therapytitle">${t.title}</h1>
+                        <h1 id="timeline">Starts at ${t.startTime}</h1>
+                    </div>
+                    <p id="description">${t.description}</p>
+                </div>
+            `)
+        });
+    }
+
+    function isHappening(startDate, endDate, calendarDay) {
+        return calendarDay >= startDate && calendarDay <= endDate;
+    }
+
+    function expand() {
+        $("#navbarSupportedContent").css('display', expanded ? 'none' : 'block');
+        expanded = !expanded;
+    }
+
+    function expand2() {
+        if (expanded2) {
+            $("#closeBtn").css('display','none');
+            $("#openBtn").css('display','inline');
+            $("#offcanvasScrolling").css('width', '25rem');
+        } else {
+            $("#openBtn").css('display','none');
+            $("#closeBtn").css('display','inline');
+            $("#offcanvasScrolling").css('width', '100%');
+        }
+        expanded2 = !expanded2;
+    }
+
+    $("#date").css('color', 'green');
+    $("#date")[0].textContent = date.toDateString();
+
+    $(document).on("click", "#calendar1", function (evt) {
+        date.setDate(date.getDate() - 1);
+
+        $("#date").css('color', '#292b2c');
+        if (date.toDateString() === today.toDateString())
+            $("#date").css('color', 'green');
+        $("#date")[0].textContent = date.toDateString();
+
+        renderTherapies(filterTherapies(date));
+    });
+
+    $(document).on("click", "#calendar2", function (evt) {
+        date.setDate(date.getDate() + 1);
+
+        $("#date").css('color', '#292b2c');
+        if (date.toDateString() === today.toDateString())
+            $("#date").css('color', 'green');
+        $("#date")[0].textContent = date.toDateString();
+
+        renderTherapies(filterTherapies(date));
+    });
+
+    renderTherapies(filterTherapies(date));
+
+</script>
+
+</html>
