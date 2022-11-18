@@ -70,3 +70,10 @@
     float: left;
     width: 80px;
 }
+
+#settings {
+    font-size: 20px;
+    width: fit-content;
+    height: fit-content;
+    margin-top: 50px;
+}
