@@ -71,22 +71,8 @@
     cursor: pointer;
 }
 
-#therapydiv2 {
-    margin: 0 auto;
-    width: 80%;
-    border: solid 1px black;
-    border-radius: 5px;
-    overflow: auto;
-    cursor: pointer;
-}
-
-#therapydiv3 {
-    margin: 0 auto;
-    width: 80%;
-    border: solid 1px black;
-    border-radius: 5px;
-    overflow: auto;
-    cursor: pointer;
+#therapydiv1:hover {
+    background-color: #e5e5e5;
 }
 
 #therapytitlediv {
