@@ -21,7 +21,6 @@
     <script
         src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="therapy.js"></script>
 
 </head>
 
@@ -291,7 +290,7 @@
                             <button id="disableNotif" type="button" class="btn btn-primary" onClick="toggle(this)">Disabled</button>
                         </div>
                         <br>
-                        <button type="button" class="btn btn-primary" style="margin-bottom:1rem;">All Therapy Notifications</button>
+                        <button type="button" class="btn btn-primary" style="margin-bottom:1rem;" onClick="openNotifs()">All Therapy Notifications</button>
 
                         <h2 id="settings">Settings</h2>
                         <p class="p-2" style="margin-bottom:0.5rem;">Text Size</p>
@@ -304,6 +303,37 @@
                         <button class="btn btn-light">Logout</button>
                         <span style="margin-top: 4rem;display: block;" />
                     </div>
+                </div>
+            </div>
+        `);
+    }
+
+    function openNotifs() {
+        $("#offcanvasScrolling").css('width', '100%');
+        $("#offcanvasScrolling").offcanvas('show');
+
+        $("#offcanvasScrolling").empty();
+
+        var html = "";
+        therapies.forEach(t => {
+            html += `<div class="d-flex flex-row">
+                    <h3 style="margin-right:1rem;">${t.title}</h3>
+                    <div class="form-check form-switch" style="margin-left:auto;margin-top:0.25rem;">
+                        <input class="form-check-input" type="checkbox" checked style="width:40px;height:22px;">
+                    </div>
+                </div>\n`;
+        });
+
+        $("#offcanvasScrolling").append(`
+            <div class="offcanvas-header">
+                <span />
+                <h5 class="offcanvas-title" id="offcanvasScrollingLabel">Notifications</h5>
+                <button type="button" class="btn-close text-reset" onClick="openProfile()"></button>
+            </div>
+            <div class="offcanvas-body" style="text-align:center;">
+                <div class="mx-auto" style="width:fit-content">
+                    ${html}
+                    <button class="btn btn-primary" onClick="openProfile()">Save Preferences</button>
                 </div>
             </div>
         `);
