@@ -70,9 +70,9 @@
             <button class="btn btn-primary" onClick="setDate()">Go to date</button>
         </div>
         <div id="datediv">
-            <input type="button" value="<" id="calendar1">
+            <button class="btn btn-primary" id="calendar1"></button>
             <h2 id="date"></h2>
-            <input type="button" value=">" id="calendar2">
+            <button class="btn btn-primary" id="calendar2"></button>
         </div>
 
         <div id="list"></div>
@@ -81,7 +81,18 @@
 </body>
 
 <script>
+    var Therapy = function (t, d, f, desc, s, d1, d2) {
+        this.title = t;
+        this.duration = d;
+        this.frequency = f;
+        this.description = desc;
+        this.startTime = s;
+        this.startDate = d1;
+        this.endDate = d2;
+    }
+
     $('#datetimepicker').datetimepicker();
+
     var codes = [];
     codes.push(new Therapy("Knee Therapy", "15 minutes", "Daily", "General Knee Therapy for all knee surgery types that lasts 15 minutes and must be performed daily.", "9:15am", new Date(2022, 9, 10, 9, 15, 0), new Date(2023, 2, 10, 9, 15, 0)));
     codes.push(new Therapy("Shoulder Therapy", "30 minutes", "Biweekly", "Rehabilitative Shoulder Therapy for recovery from dislocation. This lasts 10 minutes and must be performed twice a week.", "12:00pm", new Date(2022, 9, 10, 9, 15, 0), new Date(2023, 2, 10, 9, 15, 0)));
@@ -381,6 +392,11 @@
         if (date.toDateString() === today.toDateString())
             $("#date").css('color', 'green');
         $("#date")[0].textContent = date.toDateString();
+        dateCopy = new Date(date.getTime());
+        dateCopy.setDate(dateCopy.getDate() - 1);
+        $("#calendar1")[0].innerHTML = `< ${dateCopy.toDateString().split(" ")[1]} ${dateCopy.getDate()}`;
+        dateCopy.setDate(dateCopy.getDate() + 2);
+        $("#calendar2")[0].innerHTML = `${dateCopy.toDateString().split(" ")[1]} ${dateCopy.getDate()} >`;
 
         filterTherapies(date);
         renderTherapies();
@@ -425,6 +441,11 @@
         if (date.toDateString() === today.toDateString())
             $("#date").css('color', 'green');
         $("#date")[0].textContent = date.toDateString();
+        dateCopy = new Date(date.getTime());
+        dateCopy.setDate(dateCopy.getDate() - 1);
+        $("#calendar1")[0].innerHTML = `< ${dateCopy.toDateString().split(" ")[1]} ${dateCopy.getDate()}`;
+        dateCopy.setDate(dateCopy.getDate() + 2);
+        $("#calendar2")[0].innerHTML = `${dateCopy.toDateString().split(" ")[1]} ${dateCopy.getDate()} >`;
 
         filterTherapies(date);
         renderTherapies();
@@ -437,6 +458,11 @@
         if (date.toDateString() === today.toDateString())
             $("#date").css('color', 'green');
         $("#date")[0].textContent = date.toDateString();
+        dateCopy = new Date(date.getTime());
+        dateCopy.setDate(dateCopy.getDate() - 1);
+        $("#calendar1")[0].innerHTML = `< ${dateCopy.toDateString().split(" ")[1]} ${dateCopy.getDate()}`;
+        dateCopy.setDate(dateCopy.getDate() + 2);
+        $("#calendar2")[0].innerHTML = `${dateCopy.toDateString().split(" ")[1]} ${dateCopy.getDate()} >`;
 
         filterTherapies(date);
         renderTherapies();
@@ -449,6 +475,11 @@
         if (date.toDateString() === today.toDateString())
             $("#date").css('color', 'green');
         $("#date")[0].textContent = date.toDateString();
+        dateCopy = new Date(date.getTime());
+        dateCopy.setDate(dateCopy.getDate() - 1);
+        $("#calendar1")[0].innerHTML = `< ${dateCopy.toDateString().split(" ")[1]} ${dateCopy.getDate()}`;
+        dateCopy.setDate(dateCopy.getDate() + 2);
+        $("#calendar2")[0].innerHTML = `${dateCopy.toDateString().split(" ")[1]} ${dateCopy.getDate()} >`;
 
         filterTherapies(date);
         renderTherapies();
@@ -456,6 +487,11 @@
 
     $("#date").css('color', 'green');
     $("#date")[0].textContent = date.toDateString();
+    dateCopy = new Date(date.getTime());
+    dateCopy.setDate(dateCopy.getDate() - 1);
+    $("#calendar1")[0].innerHTML = `< ${dateCopy.toDateString().split(" ")[1]} ${dateCopy.getDate()}`;
+    dateCopy.setDate(dateCopy.getDate() + 2);
+    $("#calendar2")[0].innerHTML = `${dateCopy.toDateString().split(" ")[1]} ${dateCopy.getDate()} >`;
     filterTherapies(date);
     renderTherapies();
 

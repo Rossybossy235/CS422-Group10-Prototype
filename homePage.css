@@ -30,24 +30,6 @@
     font-size: 30px;
 }
 
-#calendar1 {
-    width: 62px;
-    height: fit-content;
-    font-size: 40px;
-    border: none;
-    border-radius: 50%;
-    cursor: pointer;
-}
-
-#calendar2 {
-    width: 62px;
-    height: fit-content;
-    font-size: 40px;
-    border: none;
-    border-radius: 50%;
-    cursor: pointer;
-}
-
 #upcomingdiv {
     margin: 0 auto;
     margin-top: 20px;
