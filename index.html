@@ -65,16 +65,19 @@
 
         <h1 id="logo">All Therapies</h1>
         <div class="d-flex flex-row mx-auto" style="width: fit-content">
-            <input id="datetimepicker" class="form-control" type="text" style="max-width: 10rem;">
-            <div class="btn-light" style="margin-left:0.1rem;margin-right:0.5rem;min-width:36px;border-radius:0.25rem;">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                    class="bi bi-calendar-event" viewBox="0 0 16 16" style="margin-left:0.6rem;margin-top:0.4rem;">
-                    <path d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z" />
-                    <path
-                        d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z" />
-                </svg>
+            <div class="d-flex flex-row" style="border: 1px solid rgba(0,0,0,0.1);
+            border-radius: 0.25rem;margin-right:0.5rem;">
+                <input id="datetimepicker" class="form-control" type="text" style="max-width: 10rem;border:none;">
+                <div class="btn-light" style="margin-left:0.1rem;min-width:36px;border-radius:0.25rem;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-calendar-event" viewBox="0 0 16 16" style="margin-left:0.6rem;margin-top:0.4rem;">
+                        <path
+                            d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z" />
+                        <path
+                            d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z" />
+                    </svg>
+                </div>
             </div>
-            </input>
             <button class="btn btn-primary" onClick="setDate()">Go to date</button>
         </div>
         <div id="datediv">
@@ -477,7 +480,10 @@
     }
 
     function setDate() {
-        date = new Date($("#datetimepicker")[0].value);
+        var test = new Date($("#datetimepicker")[0].value);
+        if (test.toString() === 'Invalid Date')
+            return;
+        date = test;
 
         $("#date").css('color', '#292b2c');
         if (date.toDateString() === today.toDateString())
