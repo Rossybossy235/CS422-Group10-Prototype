@@ -166,6 +166,9 @@
     }
 
     function openTherapy(i) {
+        $("#offcanvasScrolling").css('width', '35rem');
+        expanded2 = false;
+        
         var t = display[i];
         $("#offcanvasScrolling").css('width', expanded2 ? '100%' : '35rem');
         $("#offcanvasScrolling").empty();
