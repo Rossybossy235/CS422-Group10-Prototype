@@ -25,7 +25,8 @@
     margin-bottom: 0px;
     margin-left: 20px;
     margin-right: 20px;
-    min-width: 16rem;
+    min-width: 25vw;
+    max-width: 16rem;
     text-align: center;
     font-size: 30px;
 }
